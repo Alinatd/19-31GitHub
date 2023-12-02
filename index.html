@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parallax ToDo List</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .parallax {
+      background-image: url('https://plus.unsplash.com/premium_photo-1666700641365-1882404be623?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dG9reW98ZW58MHx8MHx8fDA%3D'); 
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .todo-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+    }
+
+    .todo-input {
+      padding: 8px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .todo-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .todo-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 8px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+
+    .todo-item button {
+      margin-left: 5px;
+      padding: 3px 8px;
+      cursor: pointer;
+      background-color: transparent;
+      color: white;
+      border: 1px solid white;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="parallax">
+    <div class="overlay">
+      <div class="todo-container">
+        <h1>ToDo List</h1>
+        <input type="text" class="todo-input" placeholder="Add a new task">
+        <ul class="todo-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const input = document.querySelector('.todo-input');
+      const todoList = document.querySelector('.todo-list');
+
+      input.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+          const task = input.value.trim();
+          if (task !== '') {
+            addTask(task);
+            input.value = '';
+          }
+        }
+      });
+
+      function addTask(task) {
+        const li = document.createElement('li');
+        li.className = 'todo-item';
+        li.textContent = task;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '❌';
+        deleteButton.addEventListener('click', function() {
+          li.remove();
+        });
+
+        li.appendChild(deleteButton);
+        todoList.appendChild(li);
+      }
+    });
+  </script>
+</body>
+</html>
